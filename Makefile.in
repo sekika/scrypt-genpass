@@ -184,8 +184,10 @@ scrypt_SOURCES = main.c				\
 
 commithash = $(shell git log --pretty=format:%h -n 1)
 
-scrypt_CFLAGS = -I . -I lib/util -I lib/genpass -I lib/crypto -DSGVERSION=\"$(commithash)\"
-scrypt_LDADD = -lcrypto
+OPENSSL_CFLAGS = $(shell pkg-config --cflags openssl 2>/dev/null)
+OPENSSL_LIBS = $(shell pkg-config --libs openssl 2>/dev/null || echo -lcrypto)
+scrypt_CFLAGS = $(OPENSSL_CFLAGS) -I . -I lib/util -I lib/genpass -I lib/crypto -DSGVERSION=\"$(commithash)\"
+scrypt_LDADD = $(OPENSSL_LIBS)
 scrypt_man_MANS = scrypt.1
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
