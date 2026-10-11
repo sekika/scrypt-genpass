@@ -33,6 +33,7 @@
 #include <unistd.h>
 
 #include "readpass.h"
+#include "hashtopass.h"
 #include "genpass.h"
 #include "warn.h"
 
